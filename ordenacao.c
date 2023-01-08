@@ -1,4 +1,5 @@
 #include "ordenacao.h"
+#include <stdio.h>
 #include <string.h>
 
 void getNome(char nome[]){
@@ -13,13 +14,39 @@ unsigned int getGRR(){
 }
 
 int buscaSequencial(int vetor[], int tam, int valor, int* numComparacoes){
-	*numComparacoes = 99;
-	return -1;
+    if (tam == 0)
+        return -1;
+
+    if (vetor[tam-1] == valor){
+        (*numComparacoes)++;
+        return tam-1;
+    }
+    (*numComparacoes)++;
+
+	return buscaSequencial(vetor, tam-1, valor, numComparacoes);
+}
+
+int b_Binaria(int vetor[], int a, int b, int valor, int *numComparacoes){
+    if (a >= b)
+        return -1;
+
+    int m = (b + a)/2;
+    if (vetor[m] == valor){
+        (*numComparacoes)++;
+        return m;
+    }
+    if (valor > vetor[m] ){
+        (*numComparacoes) += 2;
+        return b_Binaria(vetor, m+1, b, valor, numComparacoes);
+    }
+
+    (*numComparacoes) += 2;
+    return b_Binaria(vetor, a, m, valor, numComparacoes);
 }
 
 int buscaBinaria(int vetor[], int tam, int valor, int* numComparacoes){
-	*numComparacoes = 99;
-	return -1;
+
+    return b_Binaria(vetor, 0, tam, valor, numComparacoes);
 }
 
 int insertionSort(int vetor[], int tam){	

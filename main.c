@@ -33,26 +33,35 @@ int main(){
 	clock_t start, end;//variáveis do tipo clock_t
     double total;
 
+    numComp = 0;
 	start = clock();//start recebe o "ciclo" corrente
-	numComp = insertionSort(vetor, 3);
+	idxBusca = buscaSequencial(vetor, 3, 10, &numComp);
 	end = clock();//end recebe o "ciclo" corrente
+	printf("Busca sequencial %d %d\n", idxBusca, numComp);
 	//o tempo total é a diferença dividia pelos ciclos por segundo
 	total = ((double)end - start)/CLOCKS_PER_SEC;
-	printf("Tempo total: %f", total);
+	printf("Tempo total: %f\n", total);
+    
+    numComp = 0;
+	start = clock();
+	idxBusca = buscaBinaria(vetor, 3, 12, &numComp);
+	end = clock();
+	printf("Busca binaria %d %d\n", idxBusca, numComp);
+	total = ((double)end - start)/CLOCKS_PER_SEC;
+	printf("Tempo total: %f\n", total);
 
-	numComp = selectionSort(vetor, 3);
-	numComp = mergeSort(vetor, 3);
-	numComp = quickSort(vetor, 3);
-	numComp = heapSort(vetor, 3);
+
+	/* numComp = insertionSort(vetor, 3); */
+	/* numComp = selectionSort(vetor, 3); */
+	/* numComp = mergeSort(vetor, 3); */
+	/* numComp = quickSort(vetor, 3); */
+	/* numComp = heapSort(vetor, 3); */
 
 	for(int i=0; i < 3; i++){
 		printf("%d ", vetor[i]);
 	}
-	idxBusca = buscaSequencial(vetor, 3, 10, &numComp);
-	idxBusca = buscaBinaria(vetor, 3, 10, &numComp);
 
-	printf("\n%d %d", idxBusca, numComp);
-	printf("\n");
+    printf("\n");
 
 	//É obrigatório que você libere a memória alocada dinamicamente via free
 	free(vetor);
