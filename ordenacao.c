@@ -81,6 +81,33 @@ int selectionSort(int vetor[], int tam){
     return comparacoes;
 }
 
+void intercala(int v[], int a, int m, int b){
+    int i, j, k;
+    int tam = b - a + 1;
+    int u[tam];
+
+    if (a >= b)
+        return;
+
+    i = a;
+    j = m + 1;
+
+    for (k = 0; k < b-a; k++){
+        if (j > b || (i <= m && v[i] <= v[j])){
+            u[k] = v[i];
+            i++;
+        }
+        else{
+            u[k] = v[j];
+            j++;
+        }
+    }
+
+    for (i = 0; i < tam; i++){
+        v[i] = u[i];
+    }
+}
+
 int mergeSort(int vetor[], int tam){
     vetor[0] = 99;
     return -1;
