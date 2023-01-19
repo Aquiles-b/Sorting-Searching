@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
 #include "ordenacao.h"
 
 void imprime_vet(int *vet, int tam){
