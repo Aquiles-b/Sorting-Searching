@@ -84,7 +84,7 @@ int selectionSort(int vetor[], int tam){
 }
 
 void intercala(int v[], int a, int m, int b, int *numC){
-    int *vet_aux = malloc(sizeof(int)*(b-a));
+    int *vet_aux = malloc(sizeof(int)*(b-a+1));
     int i = a;
     int j = m + 1;
     int k = 0;
@@ -125,7 +125,6 @@ int mergeSort(int vetor[], int tam){
     int numComparacoes = 0;
 
     aux_merge(vetor, 0, tam-1, &numComparacoes);
-
     return numComparacoes;
 }
 

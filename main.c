@@ -14,10 +14,14 @@ int main(){
     char nome[MAX_CHAR_NOME];
     int idxBusca;
     int numComp;
+    int j = 0;
+    int i;
+
+    int num = 111;/*Numero para ser procurado no vetor pelas buscas.*/
 
     //Dica: somente é posśivel criar vetores grandes utilizando alocação dinâmica de memória
     //Veja um exemplo de alocação dinâmica a seguir
-    int tamVetor = 10;
+    int tamVetor = 100000;
     int* vetor = malloc(tamVetor * sizeof(int));
     if(vetor == NULL){
         printf("Falha fatal. Impossível alocar memoria.");
@@ -28,16 +32,10 @@ int main(){
 
     /*Vetor que o professor passou tem tamanho 3
     * com os elemento 1, 10 e 12 nessa ordem.*/
-    vetor[0] = 21;
-    vetor[1] = 0;
-    vetor[2] = 12;
-    vetor[3] = 3;
-    vetor[4] = 1;
-    vetor[5] = 5;
-    vetor[6] = 6;
-    vetor[7] = 4;
-    vetor[8] = 22;
-    vetor[9] = 8;
+    for (i = tamVetor-1; i >= 0; i--){
+        vetor[i] = j;
+        j++;
+    }
 
     getNome(nome);
     printf("Trabalho de %s\n", nome);
@@ -48,27 +46,27 @@ int main(){
     clock_t start, end;//variáveis do tipo clock_t
     double total;
 
-    imprime_vet(vetor, tamVetor);
+    /* imprime_vet(vetor, tamVetor); */
 
     start = clock();
-    numComp = mergeSort(vetor, 10);
+    numComp = mergeSort(vetor, tamVetor);
     end = clock();
     printf("Merge Sort Custo: %d\n", numComp);
     total = ((double)end - start)/CLOCKS_PER_SEC;
     printf("Tempo total: %f\n", total);
 
-    imprime_vet(vetor, tamVetor);
+    /* imprime_vet(vetor, tamVetor); */
 
 
     /*Selection sort.*/
     start = clock();
-    numComp = selectionSort(vetor, 10);
+    numComp = selectionSort(vetor, tamVetor);
     end = clock();
     printf("Selection Sort Custo: %d\n", numComp);
     total = ((double)end - start)/CLOCKS_PER_SEC;
     printf("Tempo total: %f\n", total);
 
-    imprime_vet(vetor, tamVetor);
+    /* imprime_vet(vetor, tamVetor); */
 
     /* Tem que implementar esses ainda. */
 
@@ -79,7 +77,7 @@ int main(){
     /*Busca sequencial*/
     numComp = 0;
     start = clock();//start recebe o "ciclo" corrente
-    idxBusca = buscaSequencial(vetor, 10, 10, &numComp);
+    idxBusca = buscaSequencial(vetor, tamVetor, num, &numComp);
     end = clock();//end recebe o "ciclo" corrente
     printf("Busca sequencial indice: %d Custo: %d\n", idxBusca, numComp);
     //o tempo total é a diferença dividia pelos ciclos por segundo
@@ -89,7 +87,7 @@ int main(){
     /*Busca binaria */
     numComp = 0;
     start = clock();
-    idxBusca = buscaBinaria(vetor, 10, 12, &numComp);
+    idxBusca = buscaBinaria(vetor, tamVetor, num, &numComp);
     end = clock();
     printf("Busca binaria indice: %d Custo: %d\n", idxBusca, numComp);
     total = ((double)end - start)/CLOCKS_PER_SEC;
