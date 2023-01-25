@@ -50,6 +50,16 @@ int main(){
 
     imprime_vet(vetor, tamVetor);
 
+    start = clock();
+    numComp = mergeSort(vetor, 10);
+    end = clock();
+    printf("Merge Sort Custo: %d\n", numComp);
+    total = ((double)end - start)/CLOCKS_PER_SEC;
+    printf("Tempo total: %f\n", total);
+
+    imprime_vet(vetor, tamVetor);
+
+
     /*Selection sort.*/
     start = clock();
     numComp = selectionSort(vetor, 10);
@@ -61,8 +71,8 @@ int main(){
     imprime_vet(vetor, tamVetor);
 
     /* Tem que implementar esses ainda. */
+
     /* numComp = insertionSort(vetor, 3); */
-    /* numComp = mergeSort(vetor, 3); */
     /* numComp = quickSort(vetor, 3); */
     /* numComp = heapSort(vetor, 3); */
 

@@ -1,4 +1,6 @@
 #include "ordenacao.h"
+#include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 void getNome(char nome[]){
@@ -81,36 +83,50 @@ int selectionSort(int vetor[], int tam){
     return comparacoes;
 }
 
-void intercala(int v[], int a, int m, int b){
-    int i, j, k;
-    int tam = b - a + 1;
-    int u[tam];
+void intercala(int v[], int a, int m, int b, int *numC){
+    int *vet_aux = malloc(sizeof(int)*(b-a));
+    int i = a;
+    int j = m + 1;
+    int k = 0;
 
-    if (a >= b)
-        return;
-
-    i = a;
-    j = m + 1;
-
-    for (k = 0; k < b-a; k++){
-        if (j > b || (i <= m && v[i] <= v[j])){
-            u[k] = v[i];
-            i++;
-        }
-        else{
-            u[k] = v[j];
-            j++;
-        }
+    while (i <= m && j <= b){
+        if (v[i] <= v[j])
+            vet_aux[k++] = v[i++];
+        else
+            vet_aux[k++] = v[j++];
+        (*numC)++;
     }
 
-    for (i = 0; i < tam; i++){
-        v[i] = u[i];
+    /*Termina de passar os elementos q sobraram em um dos lados.*/
+    while (i <= m)
+        vet_aux[k++] = v[i++];
+    while (j <= b)
+        vet_aux[k++] = v[j++];
+    k = 0;
+
+    for (i = a; i <= b; i++){
+        v[i] = vet_aux[k++];
+    }
+
+    free(vet_aux);
+}
+
+/*Vai fazer a recursão do mergeSort.*/
+void aux_merge(int vet[], int a, int b, int *numC){
+    if (a < b){
+        int m = a+(b-a)/ 2;
+        aux_merge(vet, a, m, numC);
+        aux_merge(vet, m+1, b, numC);
+        intercala(vet, a, m, b, numC);
     }
 }
 
 int mergeSort(int vetor[], int tam){
-    vetor[0] = 99;
-    return -1;
+    int numComparacoes = 0;
+
+    aux_merge(vetor, 0, tam-1, &numComparacoes);
+
+    return numComparacoes;
 }
 
 int quickSort(int vetor[], int tam){
