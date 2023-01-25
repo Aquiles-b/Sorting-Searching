@@ -127,7 +127,7 @@ int mergeSort(int vetor[], int tam){
     aux_merge(vetor, 0, tam-1, &numComparacoes);
     return numComparacoes;
 }
-
+/* teste */
 int quickSort(int vetor[], int tam){
     vetor[0] = 99;
     return -1;
