@@ -3,7 +3,7 @@
 #include <time.h>
 #include "ordenacao.h"
 
-#define SHUFFLE_SWAP_NUM 50000
+#define SHUFFLE_SWAP_NUM 100000
 
 int aleat(int min, int max) {
     return min + (rand() % (max - min + 1));
@@ -38,7 +38,7 @@ int main(){
 
     //Dica: somente é posśivel criar vetores grandes utilizando alocação dinâmica de memória
     //Veja um exemplo de alocação dinâmica a seguir
-    int tamVetor = 100000;
+    int tamVetor = 1000;
     int* vetor = malloc(tamVetor * sizeof(int));
     if(vetor == NULL){
         printf("Falha fatal. Impossível alocar memoria.");
@@ -64,7 +64,10 @@ int main(){
     double total;
     srand(time(NULL));
 
-    /* imprime_vet(vetor, tamVetor); */
+    /*Merge Sort*/
+    shuffle(vetor, tamVetor);
+    // printf("Vetor Embaralhado:\n");
+    // imprime_vet(vetor, tamVetor);
 
     start = clock();
     numComp = mergeSort(vetor, tamVetor);
@@ -73,10 +76,14 @@ int main(){
     total = ((double)end - start)/CLOCKS_PER_SEC;
     printf("Tempo total: %f\n", total);
 
-    /* imprime_vet(vetor, tamVetor); */
-
-
+    //imprime_vet(vetor, tamVetor);
+    printf("\n");
+    
     /*Selection sort.*/
+    shuffle(vetor, tamVetor);
+    // printf("Vetor Embaralhado:\n");
+    // imprime_vet(vetor, tamVetor);
+
     start = clock();
     numComp = selectionSort(vetor, tamVetor);
     end = clock();
@@ -84,13 +91,53 @@ int main(){
     total = ((double)end - start)/CLOCKS_PER_SEC;
     printf("Tempo total: %f\n", total);
 
-    /* imprime_vet(vetor, tamVetor); */
+    //imprime_vet(vetor, tamVetor);
+    printf("\n");
 
-    /* Tem que implementar esses ainda. */
+    /*Insertion Sort*/
+    shuffle(vetor, tamVetor);
+    // printf("Vetor Embaralhado:\n");
+    // imprime_vet(vetor, tamVetor);
 
-    /* numComp = insertionSort(vetor, 3); */
-    /* numComp = quickSort(vetor, 3); */
-    /* numComp = heapSort(vetor, 3); */
+    start = clock();
+    numComp = insertionSort(vetor,tamVetor);
+    end = clock();
+    printf("Insertion Sort Custo: %d\n", numComp);
+    total = ((double)end - start)/CLOCKS_PER_SEC;
+    printf("Tempo total: %f\n", total);
+
+    //imprime_vet(vetor, tamVetor);
+    printf("\n");
+
+    /*Quick Sort*/
+    shuffle(vetor, tamVetor);
+    // printf("Vetor Embaralhado:\n");
+    // imprime_vet(vetor, tamVetor);
+
+    start = clock();
+    numComp = quickSort(vetor,tamVetor);
+    end = clock();
+    printf("Quick Sort Custo: %d\n", numComp);
+    total = ((double)end - start)/CLOCKS_PER_SEC;
+    printf("Tempo total: %f\n", total);
+
+    //imprime_vet(vetor, tamVetor);
+    printf("\n");
+
+    /*Heap Sort*/
+    shuffle(vetor, tamVetor);
+    // printf("Vetor Embaralhado:\n");
+    // imprime_vet(vetor, tamVetor);
+
+    start = clock();
+    numComp = heapSort(vetor, tamVetor);
+    end = clock();
+    printf("Heap Sort Custo: %d\n", numComp);
+    total = ((double)end - start)/CLOCKS_PER_SEC;
+    printf("Tempo total: %f\n", total);
+
+    //imprime_vet(vetor, tamVetor);
+    printf("\n");
 
     /*Busca sequencial*/
     numComp = 0;
