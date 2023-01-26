@@ -62,11 +62,11 @@ int buscaBinariaInsercao(int x, int vetor[], int a, int b, int *numC) {
         return b + 1;
     int meio = (a + b) / 2;
     if (vetor[meio] > x) {
-        *numC++;
+        (*numC)++;
         return buscaBinariaInsercao(x, vetor, a, meio - 1, numC);
     }
     if (vetor[meio] < x) {
-        *numC++;        
+        (*numC)++;        
         return buscaBinariaInsercao(x, vetor, meio + 1, b, numC);
     }
     return meio;
@@ -174,7 +174,7 @@ int particiona(int vetor[], int a, int b, int x, int *numC) {
             meio++;
             troca(vetor + meio, vetor + i);
         }
-        *numC++;
+        (*numC)++;
     }
 
     return meio;
@@ -213,14 +213,14 @@ void maxHeapify(int vetor[], int i, int tam, int *numC) {
     if (esq < tam) {
         if (vetor[esq] > vetor[i])
             maior = esq;
-        *numC++;
+        (*numC)++;
     }
     else
         maior = i;
     if (dir < tam) {
         if (vetor[dir] > vetor[maior])
             maior = dir;
-        *numC++;
+        (*numC)++;
     }
     if (maior != i) {
         troca(vetor + i, vetor + maior);

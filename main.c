@@ -3,6 +3,23 @@
 #include <time.h>
 #include "ordenacao.h"
 
+#define SHUFFLE_SWAP_NUM 50000
+
+int aleat(int min, int max) {
+    return min + (rand() % (max - min + 1));
+}
+
+void shuffle(int *vet, int tam) {
+    int a, b, aux;
+    for (int i = 0; i < SHUFFLE_SWAP_NUM; i++) {
+        a = aleat(0, tam - 1);
+        b = aleat(0, tam - 1);
+        aux = vet[a];
+        vet[a] = vet[b];
+        vet[b] = aux;
+    }
+}
+
 void imprime_vet(int *vet, int tam){
     for(int i=0; i < tam; i++){
         printf("%d ", vet[i]);
@@ -45,6 +62,7 @@ int main(){
     //Para medir o tempo, inclua time.h, e siga o exemplo:
     clock_t start, end;//variáveis do tipo clock_t
     double total;
+    srand(time(NULL));
 
     /* imprime_vet(vetor, tamVetor); */
 
