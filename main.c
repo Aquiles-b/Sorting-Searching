@@ -38,7 +38,7 @@ int main(){
 
     //Dica: somente é posśivel criar vetores grandes utilizando alocação dinâmica de memória
     //Veja um exemplo de alocação dinâmica a seguir
-    int tamVetor = 1000;
+    int tamVetor = 100000;
     int* vetor = malloc(tamVetor * sizeof(int));
     if(vetor == NULL){
         printf("Falha fatal. Impossível alocar memoria.");
