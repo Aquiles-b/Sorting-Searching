@@ -57,7 +57,7 @@ int main(){
     getNome(nome);
     printf("Trabalho de %s\n", nome);
     printf("GRR %u\n", getGRR());
-    printf("GRR 20221225\n");
+    printf("GRR 20221225\n\n");
 
     //Para medir o tempo, inclua time.h, e siga o exemplo:
     clock_t start, end;//variáveis do tipo clock_t
@@ -148,6 +148,7 @@ int main(){
     //o tempo total é a diferença dividia pelos ciclos por segundo
     total = ((double)end - start)/CLOCKS_PER_SEC;
     printf("Tempo total: %f\n", total);
+    printf("\n");
 
     /*Busca binaria */
     numComp = 0;
