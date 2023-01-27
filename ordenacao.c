@@ -43,7 +43,7 @@ int buscaSequencial(int vetor[], int tam, int valor, int *numComparacoes)
 
 int aux_busca_binaria(int vetor[], int a, int b, int valor, int *numComparacoes)
 {
-    if (a >= b)
+    if (a > b)
         return -1;
 
     int m = (b + a) / 2;
@@ -59,7 +59,7 @@ int aux_busca_binaria(int vetor[], int a, int b, int valor, int *numComparacoes)
     }
 
     (*numComparacoes) += 2;
-    return aux_busca_binaria(vetor, a, m, valor, numComparacoes);
+    return aux_busca_binaria(vetor, a, m-1, valor, numComparacoes);
 }
 
 int buscaBinaria(int vetor[], int tam, int valor, int *numComparacoes)

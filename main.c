@@ -34,7 +34,7 @@ int main(){
     int j = 0;
     int i;
 
-    int num = 111;/*Numero para ser procurado no vetor pelas buscas.*/
+    int num = 31415;/*Numero para ser procurado no vetor pelas buscas.*/
 
     //Dica: somente é posśivel criar vetores grandes utilizando alocação dinâmica de memória
     //Veja um exemplo de alocação dinâmica a seguir
