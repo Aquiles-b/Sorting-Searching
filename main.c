@@ -27,6 +27,21 @@ void imprime_vet(int *vet, int tam){
     printf ("\n");
 }
 
+int verificaOrdem(int vetor[], int tam) {
+    for (int i = 0; i < tam - 1; i++) {
+        if (vetor[i] > vetor[i + 1])
+            return 0;
+    }
+    return 1;
+}
+
+void estaOrdenado(int vetor[], int tam) {
+    if (verificaOrdem(vetor, tam))
+        printf("O vetor esta ordenado\n");
+    else
+        printf("O vetor nao esta ordenado\n");
+}
+
 void testaSort(int vetor[], int tam, int sortfunc(int*, int)) {
     clock_t start, end;//variáveis do tipo clock_t
     double total;
@@ -38,6 +53,7 @@ void testaSort(int vetor[], int tam, int sortfunc(int*, int)) {
     printf("Custo de comparações: %d\n", numComp);
     total = ((double)end - start)/CLOCKS_PER_SEC;
     printf("Tempo total: %f\n\n", total);
+    estaOrdenado(vetor, tam);
 }
 
 void testaBusca(int vetor[], int tam, int searchfunc(int*, int, int, int*), int num) {
@@ -59,6 +75,8 @@ void testaBusca(int vetor[], int tam, int searchfunc(int*, int, int, int*), int 
 void printSeparador() {
     printf("----------------------------------\n");
 }
+
+
 
 int main(){
     char nome[MAX_CHAR_NOME];
@@ -130,7 +148,7 @@ int main(){
     printSeparador();
     /*Busca binaria */
     printf("Busca Binaria\n");
-    testaBusca(vetor, tamVetor, buscaSequencial, num);
+    testaBusca(vetor, tamVetor, buscaBinaria, num);
     
     //É obrigatório que você libere a memória alocada dinamicamente via free
     free(vetor);

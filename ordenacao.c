@@ -16,40 +16,28 @@ unsigned int getGRR()
     return 20221230;
 }
 
-int buscaSequencial(int vetor[], int tam, int valor, int *numComparacoes)
+int buscaSequencial(int vetor[], int tam, int valor, int *numC)
 {
     if (tam == 0)
         return -1;
 
-    if (vetor[tam - 1] == valor)
-    {
-        (*numComparacoes)++;
+    if ((*numC)++, vetor[tam - 1] == valor)
         return tam - 1;
-    }
-    (*numComparacoes)++;
 
-    return buscaSequencial(vetor, tam - 1, valor, numComparacoes);
+    return buscaSequencial(vetor, tam - 1, valor, numC);
 }
 
-int aux_busca_binaria(int vetor[], int a, int b, int valor, int *numComparacoes)
+int aux_busca_binaria(int vetor[], int a, int b, int valor, int *numC)
 {
     if (a > b)
         return -1;
 
     int m = (b + a) / 2;
-    if (vetor[m] == valor)
-    {
-        (*numComparacoes)++;
+    if ((*numC)++, vetor[m] == valor)
         return m;
-    }
-    if (valor > vetor[m])
-    {
-        (*numComparacoes) += 2;
-        return aux_busca_binaria(vetor, m + 1, b, valor, numComparacoes);
-    }
-
-    (*numComparacoes) += 2;
-    return aux_busca_binaria(vetor, a, m-1, valor, numComparacoes);
+    if ((*numC)++, valor > vetor[m])
+        return aux_busca_binaria(vetor, m + 1, b, valor, numC);
+    return aux_busca_binaria(vetor, a, m-1, valor, numC);
 }
 
 int buscaBinaria(int vetor[], int tam, int valor, int *numComparacoes)
@@ -71,16 +59,12 @@ int buscaBinariaInsercao(int x, int vetor[], int a, int b, int *numC)
     if (a > b)
         return b + 1;
     int meio = (a + b) / 2;
-    if (vetor[meio] > x)
-    {
-        (*numC)++;
+    // descarta o valor de (*numC)++ e avalia o valor de vetor[meio] > x
+    if ((*numC)++, vetor[meio] > x)
         return buscaBinariaInsercao(x, vetor, a, meio - 1, numC);
-    }
-    if (vetor[meio] < x)
-    {
-        (*numC)++;
+    if ((*numC)++, vetor[meio] < x)
         return buscaBinariaInsercao(x, vetor, meio + 1, b, numC);
-    }
+
     return meio;
 }
 
@@ -147,11 +131,10 @@ void intercala(int v[], int a, int m, int b, int *numC)
 
     while (i <= m && j <= b)
     {
-        if (v[i] <= v[j])
+        if ((*numC)++, v[i] <= v[j])
             vet_aux[k++] = v[i++];
         else
             vet_aux[k++] = v[j++];
-        (*numC)++;
     }
 
     /*Termina de passar os elementos q sobraram em um dos lados.*/
@@ -193,14 +176,10 @@ int particiona(int vetor[], int a, int b, int x, int *numC)
 {
     int meio = a - 1;
     for (int i = a; i <= b; i++)
-    {
-        if (vetor[i] <= x)
-        {
+        if ((*numC)++, vetor[i] <= x) {
             meio++;
             troca(vetor + meio, vetor + i);
         }
-        (*numC)++;
-    }
 
     return meio;
 }
@@ -240,16 +219,10 @@ void maxHeapify(int vetor[], int i, int tam, int *numC)
     int dir = filhoD(i);
     int maior = i;
 
-    if (esq < tam) {
-        if (vetor[esq] > vetor[i])
+    if (esq < tam && ((*numC)++, vetor[esq] > vetor[i]))
             maior = esq;
-        (*numC)++;
-    }
-    if (dir < tam) {
-        if (vetor[dir] > vetor[maior])
+    if (dir < tam && ((*numC)++, vetor[dir] > vetor[maior]))
             maior = dir;
-        (*numC)++;
-    }
     if (maior != i) {
         troca(vetor + i, vetor + maior);
         maxHeapify(vetor, maior, tam, numC);
