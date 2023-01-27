@@ -27,10 +27,41 @@ void imprime_vet(int *vet, int tam){
     printf ("\n");
 }
 
+void testaSort(int vetor[], int tam, int sortfunc(int*, int)) {
+    clock_t start, end;//variáveis do tipo clock_t
+    double total;
+    int numComp;
+    
+    start = clock();
+    numComp = sortfunc(vetor, tam);
+    end = clock();
+    printf("Custo de comparações: %d\n", numComp);
+    total = ((double)end - start)/CLOCKS_PER_SEC;
+    printf("Tempo total: %f\n\n", total);
+}
+
+void testaBusca(int vetor[], int tam, int searchfunc(int*, int, int, int*), int num) {
+    clock_t start, end;//variáveis do tipo clock_t
+    double total;
+    int numComp;
+    int idxBusca;
+
+    numComp = 0;
+    start = clock();//start recebe o "ciclo" corrente
+    idxBusca = searchfunc(vetor, tam, num, &numComp);
+    end = clock();//end recebe o "ciclo" corrente
+    printf("Indice: %d Custo: %d\n", idxBusca, numComp);
+    //o tempo total é a diferença dividia pelos ciclos por segundo
+    total = ((double)end - start)/CLOCKS_PER_SEC;
+    printf("Tempo total: %f\n\n", total);
+}
+
+void printSeparador() {
+    printf("----------------------------------\n");
+}
+
 int main(){
     char nome[MAX_CHAR_NOME];
-    int idxBusca;
-    int numComp;
     int j = 0;
     int i;
 
@@ -59,106 +90,48 @@ int main(){
     printf("GRR %u\n", getGRR());
     printf("GRR 20221225\n\n");
 
-    //Para medir o tempo, inclua time.h, e siga o exemplo:
-    clock_t start, end;//variáveis do tipo clock_t
-    double total;
     srand(time(NULL));
 
+    printSeparador();
     /*Merge Sort*/
     shuffle(vetor, tamVetor);
-    // printf("Vetor Embaralhado:\n");
-    // imprime_vet(vetor, tamVetor);
-
-    start = clock();
-    numComp = mergeSort(vetor, tamVetor);
-    end = clock();
-    printf("Merge Sort Custo: %d\n", numComp);
-    total = ((double)end - start)/CLOCKS_PER_SEC;
-    printf("Tempo total: %f\n", total);
-
-    //imprime_vet(vetor, tamVetor);
-    printf("\n");
+    printf("Merge Sort\n");
+    testaSort(vetor, tamVetor, mergeSort);
     
+    printSeparador();
     /*Selection sort.*/
     shuffle(vetor, tamVetor);
-    // printf("Vetor Embaralhado:\n");
-    // imprime_vet(vetor, tamVetor);
-
-    start = clock();
-    numComp = selectionSort(vetor, tamVetor);
-    end = clock();
-    printf("Selection Sort Custo: %d\n", numComp);
-    total = ((double)end - start)/CLOCKS_PER_SEC;
-    printf("Tempo total: %f\n", total);
-
-    //imprime_vet(vetor, tamVetor);
-    printf("\n");
-
+    printf("Selection Sort\n");
+    testaSort(vetor, tamVetor, selectionSort);
+    
+    printSeparador();
     /*Insertion Sort*/
     shuffle(vetor, tamVetor);
-    // printf("Vetor Embaralhado:\n");
-    // imprime_vet(vetor, tamVetor);
+    printf("Insertion Sort\n");
+    testaSort(vetor, tamVetor, insertionSort);
 
-    start = clock();
-    numComp = insertionSort(vetor,tamVetor);
-    end = clock();
-    printf("Insertion Sort Custo: %d\n", numComp);
-    total = ((double)end - start)/CLOCKS_PER_SEC;
-    printf("Tempo total: %f\n", total);
-
-    //imprime_vet(vetor, tamVetor);
-    printf("\n");
-
+    printSeparador();
     /*Quick Sort*/
     shuffle(vetor, tamVetor);
-    // printf("Vetor Embaralhado:\n");
-    // imprime_vet(vetor, tamVetor);
+    printf("Quick Sort\n");
+    testaSort(vetor, tamVetor, quickSort);
 
-    start = clock();
-    numComp = quickSort(vetor,tamVetor);
-    end = clock();
-    printf("Quick Sort Custo: %d\n", numComp);
-    total = ((double)end - start)/CLOCKS_PER_SEC;
-    printf("Tempo total: %f\n", total);
-
-    //imprime_vet(vetor, tamVetor);
-    printf("\n");
-
+    printSeparador();
     /*Heap Sort*/
     shuffle(vetor, tamVetor);
-    // printf("Vetor Embaralhado:\n");
-    // imprime_vet(vetor, tamVetor);
+    printf("Heap Sort\n");
+    testaSort(vetor, tamVetor, heapSort);
 
-    start = clock();
-    numComp = heapSort(vetor, tamVetor);
-    end = clock();
-    printf("Heap Sort Custo: %d\n", numComp);
-    total = ((double)end - start)/CLOCKS_PER_SEC;
-    printf("Tempo total: %f\n", total);
-
-    //imprime_vet(vetor, tamVetor);
-    printf("\n");
-
+    printSeparador();
     /*Busca sequencial*/
-    numComp = 0;
-    start = clock();//start recebe o "ciclo" corrente
-    idxBusca = buscaSequencial(vetor, tamVetor, num, &numComp);
-    end = clock();//end recebe o "ciclo" corrente
-    printf("Busca sequencial indice: %d Custo: %d\n", idxBusca, numComp);
-    //o tempo total é a diferença dividia pelos ciclos por segundo
-    total = ((double)end - start)/CLOCKS_PER_SEC;
-    printf("Tempo total: %f\n", total);
-    printf("\n");
+    printf("Busca Sequencial\n");
+    testaBusca(vetor, tamVetor, buscaSequencial, num);
 
+    printSeparador();
     /*Busca binaria */
-    numComp = 0;
-    start = clock();
-    idxBusca = buscaBinaria(vetor, tamVetor, num, &numComp);
-    end = clock();
-    printf("Busca binaria indice: %d Custo: %d\n", idxBusca, numComp);
-    total = ((double)end - start)/CLOCKS_PER_SEC;
-    printf("Tempo total: %f\n", total);
-
+    printf("Busca Binaria\n");
+    testaBusca(vetor, tamVetor, buscaSequencial, num);
+    
     //É obrigatório que você libere a memória alocada dinamicamente via free
     free(vetor);
 

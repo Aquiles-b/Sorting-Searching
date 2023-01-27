@@ -3,16 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 
-// debug
-void print_vet(int *vet)
-{
-    for (int i = 0; i < 10; i++)
-    {
-        printf("%d ", vet[i]);
-    }
-    printf("\n");
-}
-
 void getNome(char nome[])
 {
     // substitua por seu nome
