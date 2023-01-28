@@ -3,21 +3,18 @@
 #include <stdio.h>
 #include <string.h>
 
-void getNome(char nome[])
-{
+void getNome(char nome[]) {
     // substitua por seu nome
     strncpy(nome, "Bruno Aquiles de Lima e Marcelo Gyovani Pereira", MAX_CHAR_NOME);
     nome[MAX_CHAR_NOME - 1] = '\0'; // adicionada terminação manual para caso de overflow
 }
 
 // a função a seguir deve retornar o seu número de GRR
-unsigned int getGRR()
-{
+unsigned int getGRR() {
     return 20221230;
 }
 
-int buscaSequencial(int vetor[], int tam, int valor, int *numC)
-{
+int buscaSequencial(int vetor[], int tam, int valor, int *numC) {
     if (tam == 0)
         return -1;
 
@@ -27,8 +24,7 @@ int buscaSequencial(int vetor[], int tam, int valor, int *numC)
     return buscaSequencial(vetor, tam - 1, valor, numC);
 }
 
-int aux_busca_binaria(int vetor[], int a, int b, int valor, int *numC)
-{
+int aux_busca_binaria(int vetor[], int a, int b, int valor, int *numC) {
     if (a > b)
         return -1;
 
@@ -40,13 +36,11 @@ int aux_busca_binaria(int vetor[], int a, int b, int valor, int *numC)
     return aux_busca_binaria(vetor, a, m-1, valor, numC);
 }
 
-int buscaBinaria(int vetor[], int tam, int valor, int *numComparacoes)
-{
+int buscaBinaria(int vetor[], int tam, int valor, int *numComparacoes) {
     return aux_busca_binaria(vetor, 0, tam, valor, numComparacoes);
 }
 
-void troca(int *a, int *b)
-{
+void troca(int *a, int *b) {
     int aux = *a;
 
     *a = *b;
@@ -54,8 +48,7 @@ void troca(int *a, int *b)
 }
 
 /* Retorna a posição de inserção de um elemento x num vetor de inicio a e fim b */
-int buscaBinariaInsercao(int x, int vetor[], int a, int b, int *numC)
-{
+int buscaBinariaInsercao(int x, int vetor[], int a, int b, int *numC) {
     if (a > b)
         return b + 1;
     int meio = (a + b) / 2;
@@ -68,31 +61,51 @@ int buscaBinariaInsercao(int x, int vetor[], int a, int b, int *numC)
     return meio;
 }
 
-void insere(int vetor[], int a, int b, int *numC)
-{
-    int p = buscaBinariaInsercao(vetor[b], vetor, a, b, numC);
+// 1 2 3 5 4
+int buscaSequencialInsercao(int x, int vetor[], int a, int b, int *numC) {
+    if (a > b)
+        return a;
+    if ((*numC)++, vetor[b] <= x)
+        return b;
+    return buscaSequencialInsercao(x, vetor, a, b - 1, numC);
+}
+
+void insere(int vetor[], int a, int b, int *numC) {
+    int p = buscaSequencialInsercao(vetor[b], vetor, a, b, numC);
     for (int i = b; i > p; i--)
         troca(vetor + i, vetor + i - 1);
 }
 
-void auxInsertionSort(int vetor[], int a, int b, int *numC)
-{
+void auxInsertionSort(int vetor[], int a, int b, int *numC) {
     if (a > b)
         return;
     auxInsertionSort(vetor, a, b - 1, numC);
     insere(vetor, a, b, numC);
 }
 
-int insertionSort(int vetor[], int tam)
-{
+int insertionSort(int vetor[], int tam) {
     int numC = 0;
 
     auxInsertionSort(vetor, 0, tam - 1, &numC);
     return numC;
 }
+// 1 2 3 5 4
+void auxInsertionSortSequencial(int vetor[], int a, int b, int *numC) {
+    if (a >= b)
+        return;
+    if (vetor[a] > vetor[a + 1]) {
+        for ()
+    }
+}
 
-int aux_selection(int vetor[], int a, int b, int *comparacoes)
-{
+int insertionSortSequencial(int vetor[], int tam) {
+    int numC = 0;
+
+    auxInsertionSortSequencial(vetor, 0, tam, &numC);
+    return numC;
+}
+
+int aux_selection(int vetor[], int a, int b, int *comparacoes) {
     int menor;
     int i, aux;
 
@@ -100,8 +113,7 @@ int aux_selection(int vetor[], int a, int b, int *comparacoes)
         return 1;
 
     menor = a;
-    for (i = a + 1; i <= b; i++)
-    {
+    for (i = a + 1; i <= b; i++) {
         (*comparacoes)++;
         if (vetor[menor] > vetor[i])
             menor = i;
@@ -113,8 +125,7 @@ int aux_selection(int vetor[], int a, int b, int *comparacoes)
     return aux_selection(vetor, a + 1, b, comparacoes);
 }
 
-int selectionSort(int vetor[], int tam)
-{
+int selectionSort(int vetor[], int tam) {
     int comparacoes = 0;
 
     aux_selection(vetor, 0, tam - 1, &comparacoes);
@@ -122,15 +133,13 @@ int selectionSort(int vetor[], int tam)
     return comparacoes;
 }
 
-void intercala(int v[], int a, int m, int b, int *numC)
-{
+void intercala(int v[], int a, int m, int b, int *numC) {
     int *vet_aux = malloc(sizeof(int) * (b - a + 1));
     int i = a;
     int j = m + 1;
     int k = 0;
 
-    while (i <= m && j <= b)
-    {
+    while (i <= m && j <= b) {
         if ((*numC)++, v[i] <= v[j])
             vet_aux[k++] = v[i++];
         else
@@ -144,8 +153,7 @@ void intercala(int v[], int a, int m, int b, int *numC)
         vet_aux[k++] = v[j++];
     k = 0;
 
-    for (i = a; i <= b; i++)
-    {
+    for (i = a; i <= b; i++) {
         v[i] = vet_aux[k++];
     }
 
@@ -153,10 +161,8 @@ void intercala(int v[], int a, int m, int b, int *numC)
 }
 
 /*Vai fazer a recursão do mergeSort.*/
-void aux_merge(int vet[], int a, int b, int *numC)
-{
-    if (a < b)
-    {
+void aux_merge(int vet[], int a, int b, int *numC) {
+    if (a < b) {
         int m = a + (b - a) / 2;
         aux_merge(vet, a, m, numC);
         aux_merge(vet, m + 1, b, numC);
@@ -164,16 +170,14 @@ void aux_merge(int vet[], int a, int b, int *numC)
     }
 }
 
-int mergeSort(int vetor[], int tam)
-{
+int mergeSort(int vetor[], int tam) {
     int numComparacoes = 0;
 
     aux_merge(vetor, 0, tam - 1, &numComparacoes);
     return numComparacoes;
 }
 
-int particiona(int vetor[], int a, int b, int x, int *numC)
-{
+int particiona(int vetor[], int a, int b, int x, int *numC) {
     int meio = a - 1;
     for (int i = a; i <= b; i++)
         if ((*numC)++, vetor[i] <= x) {
@@ -184,8 +188,7 @@ int particiona(int vetor[], int a, int b, int x, int *numC)
     return meio;
 }
 
-void auxQuickSort(int vetor[], int a, int b, int *numC)
-{
+void auxQuickSort(int vetor[], int a, int b, int *numC) {
     if (a >= b)
         return;
     int meio = particiona(vetor, a, b, vetor[b], numC);
@@ -193,8 +196,7 @@ void auxQuickSort(int vetor[], int a, int b, int *numC)
     auxQuickSort(vetor, meio + 1, b, numC);
 }
 
-int quickSort(int vetor[], int tam)
-{
+int quickSort(int vetor[], int tam) {
     int numC = 0;
 
     auxQuickSort(vetor, 0, tam - 1, &numC);
@@ -202,19 +204,16 @@ int quickSort(int vetor[], int tam)
 }
 
 /* Retorna o indíce do filho esquerdo de um nodo de uma árvore binária */
-int filhoE(int i)
-{
+int filhoE(int i) {
     return 2 * i + 1;
 }
 
 /* Retorna o indíce do filho direito de um nodo de uma árvore binária */
-int filhoD(int i)
-{
+int filhoD(int i) {
     return 2 * i + 2;
 }
 
-void maxHeapify(int vetor[], int i, int tam, int *numC)
-{
+void maxHeapify(int vetor[], int i, int tam, int *numC) {
     int esq = filhoE(i);
     int dir = filhoD(i);
     int maior = i;
@@ -229,14 +228,12 @@ void maxHeapify(int vetor[], int i, int tam, int *numC)
     }
 }
 
-void buildMaxHeap(int vetor[], int tam, int *numC)
-{
+void buildMaxHeap(int vetor[], int tam, int *numC) {
     for (int i = tam / 2; i >= 0; i--) 
         maxHeapify(vetor, i, tam, numC);
 }
 
-int heapSort(int vetor[], int tam)
-{
+int heapSort(int vetor[], int tam) {
     int numC = 0;
 
     buildMaxHeap(vetor, tam, &numC);

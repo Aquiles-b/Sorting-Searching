@@ -37,4 +37,6 @@ int quickSort(int vetor[], int tam);
 
 int heapSort(int vetor[], int tam);
 
+int insertionSortSequencial(int vetor[], int tam);
+
 #endif // ORDENACAO_H_

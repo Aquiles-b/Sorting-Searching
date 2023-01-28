@@ -115,7 +115,7 @@ int main(){
 
     //Dica: somente é posśivel criar vetores grandes utilizando alocação dinâmica de memória
     //Veja um exemplo de alocação dinâmica a seguir
-    int tamVetor = 100000;
+    int tamVetor = 50000;
     int* vetor = malloc(tamVetor * sizeof(int));
     if(vetor == NULL){
         printf("Falha fatal. Impossível alocar memoria.");
@@ -140,6 +140,7 @@ int main(){
     
     printSeparador();
     /*Merge Sort*/
+    goto lixo;
     printf("Merge Sort\n");
     testaSort(vetor, tamVetor, mergeSort);
     
@@ -148,8 +149,9 @@ int main(){
     testaSort(vetor, tamVetor, selectionSort);
     
     /*Insertion Sort*/
+    lixo:
     printf("Insertion Sort\n");
-    testaSort(vetor, tamVetor, insertionSort);
+    testaSort(vetor, tamVetor, insertionSortSequencial);
 
     /*Quick Sort*/
     printf("Quick Sort\n");
