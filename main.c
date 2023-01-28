@@ -121,15 +121,6 @@ int main(){
         printf("Falha fatal. Impossível alocar memoria.");
         return 1;
     }
-    //Depois de alocado, o vetor pode ser utilizado normalmente
-    //Não esqueça de desalocar no final do programa via free
-
-    /*Vetor que o professor passou tem tamanho 3
-    * com os elemento 1, 10 e 12 nessa ordem.*/
-    for (i = tamVetor-1; i >= 0; i--){
-        vetor[i] = j;
-        j++;
-    }
 
     getNome(nome);
     printf("Trabalho de %s\n", nome);
