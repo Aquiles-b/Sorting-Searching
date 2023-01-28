@@ -14,6 +14,9 @@ unsigned int getGRR() {
     return 20221230;
 }
 
+//------------Buscas----------------------------------
+
+//->Busca sequencial:
 int buscaSequencial(int vetor[], int tam, int valor, int *numC) {
     if (tam == 0)
         return -1;
@@ -24,6 +27,7 @@ int buscaSequencial(int vetor[], int tam, int valor, int *numC) {
     return buscaSequencial(vetor, tam - 1, valor, numC);
 }
 
+//->Busca binaria:
 int aux_busca_binaria(int vetor[], int a, int b, int valor, int *numC) {
     if (a > b)
         return -1;
@@ -37,15 +41,21 @@ int aux_busca_binaria(int vetor[], int a, int b, int valor, int *numC) {
 }
 
 int buscaBinaria(int vetor[], int tam, int valor, int *numComparacoes) {
+
     return aux_busca_binaria(vetor, 0, tam, valor, numComparacoes);
 }
 
+//------------Sorts----------------------------------
+
+// Troca os valores de dois enderecos.
 void troca(int *a, int *b) {
     int aux = *a;
 
     *a = *b;
     *b = aux;
 }
+
+//->Insertion sort com busca binaria:
 
 /* Retorna a posição de inserção de um elemento x num vetor de inicio a e fim b */
 int buscaBinariaInsercao(int x, int vetor[], int a, int b, int *numC) {
@@ -61,13 +71,13 @@ int buscaBinariaInsercao(int x, int vetor[], int a, int b, int *numC) {
     return meio;
 }
 
+// Coloca o elemento na posicao correta
 void insere(int vetor[], int a, int b, int *numC) {
     int p = buscaBinariaInsercao(vetor[b], vetor, a, b, numC);
     for (int i = b; i > p; i--)
         troca(vetor + i, vetor + i - 1);
 }
 
-// Pra busca binaria. 
 void auxInsertionSort(int vetor[], int a, int b, int *numC) {
     if (a > b)
         return;
@@ -75,13 +85,14 @@ void auxInsertionSort(int vetor[], int a, int b, int *numC) {
     insere(vetor, a, b, numC);
 }
 
-// Com busca binaria.
 int insertionSort(int vetor[], int tam) {
     int numC = 0;
 
     auxInsertionSort(vetor, 0, tam - 1, &numC);
     return numC;
 }
+
+//->Insertion sort com busca sequencial:
 
 // Retorna indice da posicao que o valor de @ele deve estar.
 int achaLugar(int vetor[], int a, int ele, int *numC){
@@ -93,7 +104,6 @@ int achaLugar(int vetor[], int a, int ele, int *numC){
     return achaLugar(vetor, a-1, ele, numC);
 }
 
-// Com busca sequencial.
 void auxInsertionSortSequencial(int vetor[], int a, int b, int *numC) {
     if (a >= b)
         return;
@@ -107,7 +117,6 @@ void auxInsertionSortSequencial(int vetor[], int a, int b, int *numC) {
     auxInsertionSortSequencial(vetor, a+1, b, numC);
 }
 
-// Insertion com busca sequencial.
 int insertionSortSequencial(int vetor[], int tam) {
     int numC = 0;
 
@@ -115,6 +124,7 @@ int insertionSortSequencial(int vetor[], int tam) {
     return numC;
 }
 
+//->Selection Sort:
 int aux_selection(int vetor[], int a, int b, int *comparacoes) {
     int menor;
     int i, aux;
@@ -143,6 +153,7 @@ int selectionSort(int vetor[], int tam) {
     return comparacoes;
 }
 
+//->Merge sort:
 void intercala(int v[], int a, int m, int b, int *numC) {
     int *vet_aux = malloc(sizeof(int) * (b - a + 1));
     int i = a;
@@ -187,6 +198,7 @@ int mergeSort(int vetor[], int tam) {
     return numComparacoes;
 }
 
+//->Quick sort:
 int particiona(int vetor[], int a, int b, int x, int *numC) {
     int meio = a - 1;
     for (int i = a; i <= b; i++)
@@ -212,6 +224,8 @@ int quickSort(int vetor[], int tam) {
     auxQuickSort(vetor, 0, tam - 1, &numC);
     return numC;
 }
+
+//->Heap sort:
 
 /* Retorna o indíce do filho esquerdo de um nodo de uma árvore binária */
 int filhoE(int i) {
