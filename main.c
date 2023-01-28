@@ -55,7 +55,7 @@ void imprimeTeste(int vetor[], int tam, int sortfunc(int*, int)) {
     start = clock();
     numComp = sortfunc(vetor, tam);
     end = clock();
-    printf("    Custo de comparações: %d\n", numComp);
+    printf("    Custo de comparacoes: %d\n", numComp);
     total = ((double)end - start)/CLOCKS_PER_SEC;
     printf("    Tempo total: %f\n", total);
     estaOrdenado(vetor, tam);
