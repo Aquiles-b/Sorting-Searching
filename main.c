@@ -24,18 +24,11 @@ void printSeparador() {
     printf("----------------------------------\n");
 }
 
-void imprime_vet(int *vet, int tam){
-    for(int i=0; i < tam; i++){
-        printf("%d ", vet[i]);
-    }
-    printf ("\n");
-}
-
 int verificaOrdem(int vetor[], int tam) {
-    for (int i = 0; i < tam - 1; i++) {
+    for (int i = 0; i < tam - 1; i++)
         if (vetor[i] > vetor[i + 1])
             return 0;
-    }
+    
     return 1;
 }
 
@@ -70,28 +63,10 @@ void imprimeTeste(int vetor[], int tam, int sortfunc(int*, int)) {
 
 void testaSort(int vetor[], int tam, int sortfunc(int*, int)) {
     /* Testa com vetor embaralhado */
-    long media = 0;
-    float tmedia = 0;
     printf("- Vetor embaralhado\n");
-    for (int i = 0; i < 10; i++) {
-        shuffle(vetor, tam);
-        clock_t start, end;//variáveis do tipo clock_t
-        double total;
-        
-        int numComp;
-
-        start = clock();
-        numComp = sortfunc(vetor, tam);
-        media += numComp;
-        end = clock();
-        printf("    Custo de comparações: %d\n", numComp);
-        total = ((double)end - start)/CLOCKS_PER_SEC;
-        tmedia += total;
-        printf("    Tempo total: %f\n", total);
-        estaOrdenado(vetor, tam);
-    }
-    printf("Media: %ld\n", media/10);
-    printf("Tempo médio: %lf\n", tmedia/10);
+    shuffle(vetor, tam);
+    imprimeTeste(vetor, tam, sortfunc);
+    printf("\n");
 
     /* Testa com vetor ordenado ao contrário */
     printf("- Vetor ordenado ao contrario\n");
@@ -102,7 +77,6 @@ void testaSort(int vetor[], int tam, int sortfunc(int*, int)) {
     /* Testa com vetor ordenado */
     printf("- Vetor ordenado\n");
     imprimeTeste(vetor, tam, sortfunc);
-
     printSeparador();
 }
 
@@ -130,7 +104,7 @@ int main(){
 
     //Dica: somente é posśivel criar vetores grandes utilizando alocação dinâmica de memória
     //Veja um exemplo de alocação dinâmica a seguir
-    int tamVetor = 50000;
+    int tamVetor = 5.0000;
     int* vetor = malloc(tamVetor * sizeof(int));
     if(vetor == NULL){
         printf("Falha fatal. Impossível alocar memoria.");
@@ -144,22 +118,19 @@ int main(){
 
     srand(time(NULL));
     vetorDecrescente(vetor, tamVetor);
-    
     printSeparador();
     /*Merge Sort*/
-    goto lixo;
     printf("Merge Sort\n");
     testaSort(vetor, tamVetor, mergeSort);
-    
+
     /*Selection sort.*/
     printf("Selection Sort\n");
     testaSort(vetor, tamVetor, selectionSort);
     
     /*Insertion Sort*/
-    lixo:
     printf("Insertion Sort\n");
-    testaSort(vetor, tamVetor, insertionSortSequencial);
-    goto fim;
+    testaSort(vetor, tamVetor, insertionSort);
+
     /*Quick Sort*/
     printf("Quick Sort\n");
     testaSort(vetor, tamVetor, quickSort);
@@ -175,7 +146,7 @@ int main(){
     /*Busca binaria */
     printf("Busca Binaria\n");
     testaBusca(vetor, tamVetor, buscaBinaria, num);
-    fim:
+
     //É obrigatório que você libere a memória alocada dinamicamente via free
     free(vetor);
 
