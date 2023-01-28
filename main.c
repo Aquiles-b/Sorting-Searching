@@ -70,13 +70,31 @@ void imprimeTeste(int vetor[], int tam, int sortfunc(int*, int)) {
 
 void testaSort(int vetor[], int tam, int sortfunc(int*, int)) {
     /* Testa com vetor embaralhado */
+    long media = 0;
+    float tmedia = 0;
     printf("- Vetor embaralhado\n");
-    shuffle(vetor, tam);
-    imprimeTeste(vetor, tam, sortfunc);
-    printf("\n");
+    for (int i = 0; i < 10; i++) {
+        shuffle(vetor, tam);
+        clock_t start, end;//variáveis do tipo clock_t
+        double total;
+        
+        int numComp;
+
+        start = clock();
+        numComp = sortfunc(vetor, tam);
+        media += numComp;
+        end = clock();
+        printf("    Custo de comparações: %d\n", numComp);
+        total = ((double)end - start)/CLOCKS_PER_SEC;
+        tmedia += total;
+        printf("    Tempo total: %f\n", total);
+        estaOrdenado(vetor, tam);
+    }
+    printf("Media: %ld\n", media/10);
+    printf("Tempo médio: %lf\n", tmedia/10);
 
     /* Testa com vetor ordenado ao contrário */
-    printf("- Vetor ordenado ao contrário\n");
+    printf("- Vetor ordenado ao contrario\n");
     vetorDecrescente(vetor, tam);
     imprimeTeste(vetor, tam, sortfunc);
     printf("\n");
@@ -108,9 +126,6 @@ void testaBusca(int vetor[], int tam, int searchfunc(int*, int, int, int*), int 
 
 int main(){
     char nome[MAX_CHAR_NOME];
-    int j = 0;
-    int i;
-
     int num = 31415;/*Numero para ser procurado no vetor pelas buscas.*/
 
     //Dica: somente é posśivel criar vetores grandes utilizando alocação dinâmica de memória
@@ -128,6 +143,7 @@ int main(){
     printf("GRR 20221225\n\n");
 
     srand(time(NULL));
+    vetorDecrescente(vetor, tamVetor);
     
     printSeparador();
     /*Merge Sort*/
@@ -143,7 +159,7 @@ int main(){
     lixo:
     printf("Insertion Sort\n");
     testaSort(vetor, tamVetor, insertionSortSequencial);
-
+    goto fim;
     /*Quick Sort*/
     printf("Quick Sort\n");
     testaSort(vetor, tamVetor, quickSort);
@@ -159,7 +175,7 @@ int main(){
     /*Busca binaria */
     printf("Busca Binaria\n");
     testaBusca(vetor, tamVetor, buscaBinaria, num);
-    
+    fim:
     //É obrigatório que você libere a memória alocada dinamicamente via free
     free(vetor);
 
