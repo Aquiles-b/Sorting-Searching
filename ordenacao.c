@@ -61,21 +61,13 @@ int buscaBinariaInsercao(int x, int vetor[], int a, int b, int *numC) {
     return meio;
 }
 
-// 1 2 3 5 4
-int buscaSequencialInsercao(int x, int vetor[], int a, int b, int *numC) {
-    if (a > b)
-        return a;
-    if ((*numC)++, vetor[b] <= x)
-        return b;
-    return buscaSequencialInsercao(x, vetor, a, b - 1, numC);
-}
-
 void insere(int vetor[], int a, int b, int *numC) {
-    int p = buscaSequencialInsercao(vetor[b], vetor, a, b, numC);
+    int p = buscaBinariaInsercao(vetor[b], vetor, a, b, numC);
     for (int i = b; i > p; i--)
         troca(vetor + i, vetor + i - 1);
 }
 
+// Pra busca binaria. 
 void auxInsertionSort(int vetor[], int a, int b, int *numC) {
     if (a > b)
         return;
@@ -83,21 +75,39 @@ void auxInsertionSort(int vetor[], int a, int b, int *numC) {
     insere(vetor, a, b, numC);
 }
 
+// Com busca binaria.
 int insertionSort(int vetor[], int tam) {
     int numC = 0;
 
     auxInsertionSort(vetor, 0, tam - 1, &numC);
     return numC;
 }
-// 1 2 3 5 4
+
+// Retorna indice da posicao que o valor de @ele deve estar.
+int achaLugar(int vetor[], int a, int ele, int *numC){
+    if (a==0)
+        return a;
+
+    if ((*numC)++, vetor[a-1] < ele)
+        return a;
+    return achaLugar(vetor, a-1, ele, numC);
+}
+
+// Com busca sequencial.
 void auxInsertionSortSequencial(int vetor[], int a, int b, int *numC) {
     if (a >= b)
         return;
-    if (vetor[a] > vetor[a + 1]) {
-        for ()
+    if ((*numC)++, vetor[a] > vetor[a + 1]) {
+        int i = achaLugar(vetor, a, vetor[a+1], numC);
+        for (int p = a+1; p > i; p--){
+            troca(vetor+p, vetor+p-1);
+        }
     }
+
+    auxInsertionSortSequencial(vetor, a+1, b, numC);
 }
 
+// Insertion com busca sequencial.
 int insertionSortSequencial(int vetor[], int tam) {
     int numC = 0;
 
@@ -219,9 +229,9 @@ void maxHeapify(int vetor[], int i, int tam, int *numC) {
     int maior = i;
 
     if (esq < tam && ((*numC)++, vetor[esq] > vetor[i]))
-            maior = esq;
+        maior = esq;
     if (dir < tam && ((*numC)++, vetor[dir] > vetor[maior]))
-            maior = dir;
+        maior = dir;
     if (maior != i) {
         troca(vetor + i, vetor + maior);
         maxHeapify(vetor, maior, tam, numC);
