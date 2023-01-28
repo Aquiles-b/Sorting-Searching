@@ -20,6 +20,10 @@ void shuffle(int *vet, int tam) {
     }
 }
 
+void printSeparador() {
+    printf("----------------------------------\n");
+}
+
 void imprime_vet(int *vet, int tam){
     for(int i=0; i < tam; i++){
         printf("%d ", vet[i]);
@@ -37,23 +41,51 @@ int verificaOrdem(int vetor[], int tam) {
 
 void estaOrdenado(int vetor[], int tam) {
     if (verificaOrdem(vetor, tam))
-        printf("O vetor esta ordenado\n");
+        printf("    O vetor esta ordenado\n");
     else
-        printf("O vetor nao esta ordenado\n");
+        printf("    O vetor nao esta ordenado\n");
 }
 
-void testaSort(int vetor[], int tam, int sortfunc(int*, int)) {
+// Transforma o vetor em um vetor [tam - 1..0]
+void vetorDecrescente(int vetor[], int tam) {
+    for (int i = tam - 1, j = 0; i >= 0; i--){
+        vetor[i] = j;
+        j++;
+    }
+}
+
+void imprimeTeste(int vetor[], int tam, int sortfunc(int*, int)) {
     clock_t start, end;//variáveis do tipo clock_t
     double total;
     int numComp;
-    
+
     start = clock();
     numComp = sortfunc(vetor, tam);
     end = clock();
-    printf("Custo de comparações: %d\n", numComp);
+    printf("    Custo de comparações: %d\n", numComp);
     total = ((double)end - start)/CLOCKS_PER_SEC;
-    printf("Tempo total: %f\n\n", total);
+    printf("    Tempo total: %f\n", total);
     estaOrdenado(vetor, tam);
+}
+
+void testaSort(int vetor[], int tam, int sortfunc(int*, int)) {
+    /* Testa com vetor embaralhado */
+    printf("- Vetor embaralhado\n");
+    shuffle(vetor, tam);
+    imprimeTeste(vetor, tam, sortfunc);
+    printf("\n");
+
+    /* Testa com vetor ordenado ao contrário */
+    printf("- Vetor ordenado ao contrário\n");
+    vetorDecrescente(vetor, tam);
+    imprimeTeste(vetor, tam, sortfunc);
+    printf("\n");
+
+    /* Testa com vetor ordenado */
+    printf("- Vetor ordenado\n");
+    imprimeTeste(vetor, tam, sortfunc);
+
+    printSeparador();
 }
 
 void testaBusca(int vetor[], int tam, int searchfunc(int*, int, int, int*), int num) {
@@ -66,17 +98,13 @@ void testaBusca(int vetor[], int tam, int searchfunc(int*, int, int, int*), int 
     start = clock();//start recebe o "ciclo" corrente
     idxBusca = searchfunc(vetor, tam, num, &numComp);
     end = clock();//end recebe o "ciclo" corrente
-    printf("Indice: %d Custo: %d\n", idxBusca, numComp);
+    printf("    Indice: %d Custo: %d\n", idxBusca, numComp);
     //o tempo total é a diferença dividia pelos ciclos por segundo
     total = ((double)end - start)/CLOCKS_PER_SEC;
-    printf("Tempo total: %f\n\n", total);
+    printf("    Tempo total: %f\n\n", total);
+
+    printSeparador();
 }
-
-void printSeparador() {
-    printf("----------------------------------\n");
-}
-
-
 
 int main(){
     char nome[MAX_CHAR_NOME];
@@ -109,43 +137,32 @@ int main(){
     printf("GRR 20221225\n\n");
 
     srand(time(NULL));
-
+    
     printSeparador();
     /*Merge Sort*/
-    shuffle(vetor, tamVetor);
     printf("Merge Sort\n");
     testaSort(vetor, tamVetor, mergeSort);
     
-    printSeparador();
     /*Selection sort.*/
-    shuffle(vetor, tamVetor);
     printf("Selection Sort\n");
     testaSort(vetor, tamVetor, selectionSort);
     
-    printSeparador();
     /*Insertion Sort*/
-    shuffle(vetor, tamVetor);
     printf("Insertion Sort\n");
     testaSort(vetor, tamVetor, insertionSort);
 
-    printSeparador();
     /*Quick Sort*/
-    shuffle(vetor, tamVetor);
     printf("Quick Sort\n");
     testaSort(vetor, tamVetor, quickSort);
 
-    printSeparador();
     /*Heap Sort*/
-    shuffle(vetor, tamVetor);
     printf("Heap Sort\n");
     testaSort(vetor, tamVetor, heapSort);
-
-    printSeparador();
+    
     /*Busca sequencial*/
     printf("Busca Sequencial\n");
     testaBusca(vetor, tamVetor, buscaSequencial, num);
 
-    printSeparador();
     /*Busca binaria */
     printf("Busca Binaria\n");
     testaBusca(vetor, tamVetor, buscaBinaria, num);
