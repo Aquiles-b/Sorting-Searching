@@ -105,7 +105,7 @@ int achaLugar(int vetor[], int a, int ele, int *numC){
 }
 
 void auxInsertionSortSequencial(int vetor[], int a, int b, int *numC) {
-    if (a >= b)
+    if (a >= b-1)
         return;
     if ((*numC)++, vetor[a] > vetor[a + 1]) {
         int i = achaLugar(vetor, a, vetor[a+1], numC);
